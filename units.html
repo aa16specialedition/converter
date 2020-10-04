@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width initial-scale=1">
+<title>Unit Converter for Lazy Racers</title>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,500,700" rel=stylesheet>
+<style>#container{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font:500 1em "Roboto",sans-serif}#container>div{margin:25px 0}#top{display:flex;padding-bottom:25px;font-weight:700}#top>*{font-size:2.25rem}option{color:#000}select{margin-left:10px;background-color:transparent;color:#2196f3;font-weight:300}select,input{border:0;outline:0}input{width:100%;margin:10px 0;padding:0;border-bottom:2px solid #aaa;color:#212121;font-size:1.25rem}input:focus{border-bottom:2px solid #2196f3}.entry{font-weight:700}</style>
+</head>
+<body style=margin:0>
+<div id=container>
+<div id=top>
+<label>Convert</label>
+<select>
+<option value=speed>speed</option>
+<option value=weight>weight</option>
+<option value=power>power</option>
+<option value=torque>torque</option>
+</select>
+</div>
+<div class=entry id=src>
+<label></label><br>
+<input type=number>
+</div>
+<div class=entry id=dst>
+<label></label><br>
+<input type=number>
+</div>
+</div>
+<script>const unitSelector=document.querySelector('select');const srcUnit=document.querySelector("#src > label");const dstUnit=document.querySelector("#dst > label");const src=document.querySelector("#src > input");const dst=document.querySelector("#dst > input");let factor;const units={"speed":{"src":"mph","dst":"km/h","factor":1.609344},"weight":{"src":"lb","dst":"kg","factor":0.45359237},"power":{"src":"bhp","dst":"kW","factor":0.745699872},"torque":{"src":"lb-ft","dst":"Nm","factor":1.35581795},}
+unitSelector.addEventListener("change",event=>{const unit=units[event.target.value];srcUnit.innerHTML=unit.src,src.value="";dstUnit.innerHTML=unit.dst,dst.value="";factor=unit.factor;});unitSelector.dispatchEvent(new Event("change"));const round=n=>Math.round(n*100)/100;src.addEventListener("input",()=>{dst.value=src.value==""?"":round(src.value*factor);});dst.addEventListener("input",()=>{src.value=dst.value==""?"":round(dst.value/factor);});</script>
+</body>
+</html>
